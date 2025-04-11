@@ -1,0 +1,519 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Healthcare Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static "dashboard.css" %}">
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <!-- Sidebar -->
+            <div class="col-auto">
+                <div class="sidebar">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <div class="logo-icon">M</div>
+                        <div class="logo-text fw-bold fs-5">MedVault</div>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <nav>
+                        <a href="{% url "dashboard" %}" class="nav-link active">
+                            <i class="fas fa-th-large"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="{% url "home" %}" class="nav-link">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>Appointments</span>
+                        </a>
+                        </a>
+                        <a href="{% url "doc" %}" class="nav-link">
+                            <i class="fas fa-user-md"></i>
+                            <span>Doctor</span>
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="far fa-file-alt"></i>
+                            <span>Reports</span>
+                        </a>
+                        <a href="{% url "login" %}" class="nav-link">
+                            <i class="far fa-question-circle"></i>
+                            <span>Login</span>
+                        </a>
+                    </nav>
+                    
+                    <!-- Admin Profile -->
+                    <div class="admin-profile">
+                        <div style="display:flex;flex-direction:column;align-items:center;">
+                            <div class="logo-icon center">A</div>
+                            <div class="admin-name" id="patientName">Dr. Sadettin Kupek</div>
+                            <div class="admin-role" style="word-break: break-word;text-overflow: ellipsis;" id="patientAddress">Super Admin</div>
+                        </div>
+                        <div class="admin-actions">
+                            <button class="admin-action-btn">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                            <button class="admin-action-btn">
+                                <i class="fas fa-mobile-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col">
+                <div class="main-content">
+                    <!-- Header -->
+                    <div class="header">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="search-input" placeholder="Search patients, invoice, appointments etc">
+                        </div>
+                        <div class="notification-icons">
+                            <button class="notification-btn">
+                                <i class="far fa-bell"></i>
+                            </button>
+                            <button class="notification-btn">
+                                <i class="far fa-envelope"></i>
+                            </button>
+                            <button class="dark-mode-toggle" id="darkModeToggle">
+                                <i class="fas fa-moon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Dashboard Content -->
+                    <div class="dashboard-content">
+                        <div class="row">
+                            <!-- Overall Performance Card -->
+
+                            
+                            <!-- Profile Card -->
+                            <div class="row">
+                                <!-- Profile Card -->
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="card profile-card">
+                                        <div class="profile-tabs">
+                                            <button class="profile-tab active">Next Appointment</button>
+                                        </div>
+                                        <div class="profile-info">
+                                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Patient" class="profile-avatar">
+                                            <div>
+                                                <div class="profile-name" id="doctorAddress" style="word-break: break-word;">Martha Smith</div>
+                                            </div>
+                                        </div>
+                                        <div class="profile-appointment" id="appointmentDate">
+                                            Appointment Date: 24 Jan, 2024
+                                        </div>
+                                         <div class="profile-address">
+                                            7246, Woodland Rd, Waukesha,<br>
+                                            WI 53186
+                                        </div>
+                                        
+                                        <div class="profile-contact">
+                                            Cell: +1 310-351-7774
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <!-- History Table -->
+                                <div class="col-lg-9 col-md-6">
+                                    <div class="card history-card">
+                                        <div class="card-header">
+                                            <h5>Appointment History</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-striped table-responsive history-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Profile</th>
+                                                        <th>Doctor</th>
+                                                        <th>Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Dr. John Doe" class="doctor-profile-img">
+                                                        </td>
+                                                        <td>Dr. John Doe</td>
+                                                        <td>2025-03-30</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Dr. Jane Smith" class="doctor-profile-img">
+                                                        </td>
+                                                        <td>Dr. Jane Smith</td>
+                                                        <td>2025-03-28</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul id="AppointmentList"></ul>
+                            <!-- Lab Reports Section -->
+                            <div class="col-12">
+                                <div class="lab-reports-header">
+                                    <div class="lab-tabs">
+                                        <button class="lab-tab active">Lab Reports</button>
+                                        <button class="lab-tab">Prescription</button>
+                                        <button class="lab-tab">Medication</button>
+                                        <button class="lab-tab">Diagnosis</button>
+                                        <button class="lab-tab">5+</button>
+                                    </div>
+                                    <div class="lab-filter">
+                                        <span>Recent</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <table class="lab-table" id="past">
+                                        <thead>
+                                            <tr>
+                                                <th>Checkup <i class="fas fa-chevron-down"></i></th>
+                                                <th>Checked up by <i class="fas fa-chevron-down"></i></th>
+                                                <th>Date <i class="fas fa-chevron-down"></i></th>
+                                                <th>Treatment</th>
+                                                {% comment %} <th>Result</th> {% endcomment %}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block chatbot %}
+    {% endblock %}
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        // Performance Chart
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Healthy', 'Unhealthy'],
+                datasets: [{
+                    data: [75, 25],
+                    backgroundColor: ['#22c55e', '#ef4444']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+                }
+            });
+    </script>
+        <script>
+            let provider, signer, contract;
+            const contractAddress = "0x3145A04F16fd5522C75652b7983Df91AaC4ddD21"; 
+            const abi = [{"type":"function","name":"addPatient","stateMutability":"nonpayable","inputs":[{"name":"_uid","type":"uint256","components":null,"internalType":null},{"name":"_name","type":"string","components":null,"internalType":null},{"name":"_gender","type":"string","components":null,"internalType":null},{"name":"_addr","type":"string","components":null,"internalType":null},{"name":"_dob","type":"string","components":null,"internalType":null},{"name":"_contact","type":"uint256","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"addDoctor","stateMutability":"nonpayable","inputs":[{"name":"_uid","type":"uint256","components":null,"internalType":null},{"name":"_name","type":"string","components":null,"internalType":null},{"name":"_gender","type":"string","components":null,"internalType":null},{"name":"_addr","type":"string","components":null,"internalType":null},{"name":"_dob","type":"string","components":null,"internalType":null},{"name":"_contact","type":"uint256","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"getPatient","stateMutability":"view","inputs":[{"name":"_account","type":"address","components":null,"internalType":null}],"outputs":[{"name":"","type":"tuple","components":[{"name":"account","type":"address","components":null,"internalType":null},{"name":"uid","type":"uint256","components":null,"internalType":null},{"name":"name","type":"string","components":null,"internalType":null},{"name":"gender","type":"string","components":null,"internalType":null},{"name":"addr","type":"string","components":null,"internalType":null},{"name":"dob","type":"string","components":null,"internalType":null},{"name":"exists","type":"bool","components":null,"internalType":null},{"name":"contact","type":"uint256","components":null,"internalType":null}],"internalType":null}]},{"type":"function","name":"getDoctor","stateMutability":"view","inputs":[{"name":"_account","type":"address","components":null,"internalType":null}],"outputs":[{"name":"","type":"tuple","components":[{"name":"account","type":"address","components":null,"internalType":null},{"name":"uid","type":"uint256","components":null,"internalType":null},{"name":"name","type":"string","components":null,"internalType":null},{"name":"gender","type":"string","components":null,"internalType":null},{"name":"addr","type":"string","components":null,"internalType":null},{"name":"dob","type":"string","components":null,"internalType":null},{"name":"exists","type":"bool","components":null,"internalType":null},{"name":"contact","type":"uint256","components":null,"internalType":null}],"internalType":null}]},{"type":"function","name":"setEmergencyContact","stateMutability":"nonpayable","inputs":[{"name":"_account","type":"address","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"getEmergencyContact","stateMutability":"view","inputs":[],"outputs":[{"name":"","type":"address","components":null,"internalType":null}]},{"type":"function","name":"setAppointedDoctor","stateMutability":"nonpayable","inputs":[{"name":"_account","type":"address","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"getAppointedDoctor","stateMutability":"view","inputs":[],"outputs":[{"name":"","type":"address","components":null,"internalType":null}]},{"type":"function","name":"submit_appointment","stateMutability":"nonpayable","inputs":[{"name":"_account","type":"address","components":null,"internalType":null},{"name":"_doctor","type":"address","components":null,"internalType":null},{"name":"_date","type":"string","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"treat_appointment","stateMutability":"nonpayable","inputs":[{"name":"_ailment","type":"string","components":null,"internalType":null},{"name":"_symptoms","type":"string","components":null,"internalType":null},{"name":"_prescription","type":"string","components":null,"internalType":null},{"name":"_test","type":"string","components":null,"internalType":null},{"name":"i","type":"uint256","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"get_appointment","stateMutability":"view","inputs":[{"name":"index","type":"uint256","components":null,"internalType":null}],"outputs":[{"name":"","type":"tuple","components":[{"name":"id","type":"uint256","components":null,"internalType":null},{"name":"doctor","type":"address","components":null,"internalType":null},{"name":"date","type":"string","components":null,"internalType":null},{"name":"patient","type":"address","components":null,"internalType":null},{"name":"timestamp","type":"uint256","components":null,"internalType":null},{"name":"ailment","type":"string","components":null,"internalType":null},{"name":"symptoms","type":"string","components":null,"internalType":null},{"name":"prescription","type":"string","components":null,"internalType":null},{"name":"test","type":"string","components":null,"internalType":null}],"internalType":null}]},{"type":"function","name":"appointments_count","stateMutability":"view","inputs":[],"outputs":[{"name":"","type":"uint256","components":null,"internalType":null}]}];                      
+            async function connectWallet() {
+                if (window.ethereum) {
+                    provider = new ethers.BrowserProvider(window.ethereum);
+                    signer = await provider.getSigner();
+                    contract = new ethers.Contract(contractAddress, abi, signer);
+        
+                } else {
+                  alert("Please install MetaMask to interact with this DApp.");
+                  return;
+                }
+                const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+                const patientAddr = accounts[0]; 
+                try{
+                    const feedback = await contract.getPatient(patientAddr);
+                    const patientName = document.getElementById('patientName')
+                    patientName.innerHTML = feedback[2];
+                    const patientAddress = document.getElementById('patientAddress')
+                    patientAddress.innerHTML = feedback[0];
+                }catch(error){
+                    console.error("Error fetching patient:", error);
+                    window.location.replace("{% url "login" %}");
+
+                }
+                const feedbackCount = await contract.appointments_count();
+                const appointmentList = document.getElementById("AppointmentList");
+                appointmentList.innerHTML = "";  // Clear previous results
+                
+                const labTableBody = document.getElementById("past");
+            for (let i = 0; i < feedbackCount; i++) {
+                const appointment = await contract.get_appointment(i);
+                if (appointment.patient.toLowerCase() === patientAddr) {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${appointment.checkup || "N/A"}</td>
+                        <td>${appointment.doctor}</td>
+                        <td>${new Date(Number(appointment.timestamp) * 1000).toLocaleDateString()}</td>
+                        <td>${appointment.treatment || "N/A"}</td>
+                        <td><span class="lab-result">${appointment.checkup ? "Completed" : "Pending"}</span></td>
+                    `;
+                    labTableBody.appendChild(row);
+                }
+            }
+            }
+            connectWallet();
+        </script>
+        <style>
+            :root {
+                --primary-color: #6366f1;
+                --secondary-color: #f3f4f6;
+                --dark-color: #111827;
+                --light-color: #ffffff;
+                --border-color: #e5e7eb;
+            }
+    
+            /* Chatbot Icon */
+            #chatbot-icon {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 60px;
+                height: 60px;
+                background-color: var(--primary-color);
+                color: white;
+                font-size: 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+                cursor: pointer;
+                transition: transform 0.2s, background-color 0.2s;
+                z-index: 1000;
+            }
+    
+            #chatbot-icon:hover {
+                background-color: #4f46e5;
+                transform: scale(1.1);
+            }
+    
+            /* Chatbot Container */
+            #chatbot-container {
+                position: fixed;
+                bottom: 80px;
+                right: 20px;
+                width: 350px;
+                height: 450px;
+                background-color: var(--light-color);
+                border-radius: 15px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                z-index: 1000;
+            }
+    
+            #chatbot-container.hidden {
+                display: none;
+            }
+    
+            /* Chatbot Header */
+            #chatbot-header {
+                background-color: var(--primary-color);
+                color: white;
+                padding: 15px;
+                border-top-left-radius: 15px;
+                border-top-right-radius: 15px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 18px;
+            }
+    
+            #close-btn {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 20px;
+                cursor: pointer;
+            }
+    
+            /* Chatbot Body */
+            #chatbot-body {
+                flex: 1;
+                padding: 10px;
+                overflow-y: auto;
+            }
+    
+            #chatbot-messages {
+                display: flex;
+                flex-direction: column;
+            }
+    
+            .message {
+                margin-bottom: 15px;
+                padding: 12px;
+                border-radius: 8px;
+                max-width: 85%;
+            }
+    
+            .message.user {
+                background-color: var(--primary-color);
+                color: white;
+                align-self: flex-end;
+            }
+    
+            .message.bot {
+                background-color: #e5e7eb;
+                color: var(--dark-color);
+                align-self: flex-start;
+            }
+    
+            /* Chatbot Input */
+            #chatbot-input-container {
+                display: flex;
+                padding: 10px;
+                border-top: 1px solid var(--border-color);
+                background-color: var(--secondary-color);
+            }
+    
+            #chatbot-input {
+                flex: 1;
+                padding: 10px;
+                border: 1px solid var(--border-color);
+                border-radius: 10px;
+                background-color: var(--light-color);
+                color: var(--dark-color);
+            }
+    
+            #send-btn {
+                margin-left: 10px;
+                padding: 10px 15px;
+                background-color: var(--primary-color);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+    
+            #send-btn:hover {
+                background-color: #4f46e5;
+            }
+        </style>
+        <div id="chatbot-icon">💬</div>
+        <div id="chatbot-container" class="hidden">
+            <div id="chatbot-header">
+                <span>Chatbot</span>
+                <button id="close-btn">&times;</button>
+            </div>
+            <div id="chatbot-body">
+                <div id="chatbot-messages"></div>
+            </div>
+            <div id="chatbot-input-container">
+                <input type="text" id="chatbot-input" placeholder="Type a message..." />
+                <button id="send-btn">Send</button>
+            </div>
+        </div>
+    
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const chatbotContainer = document.getElementById("chatbot-container");
+                const closeBtn = document.getElementById("close-btn");
+                const sendBtn = document.getElementById("send-btn");
+                const chatbotInput = document.getElementById("chatbot-input");
+                const chatbotMessages = document.getElementById("chatbot-messages");
+                const chatbotIcon = document.getElementById("chatbot-icon");
+    
+                // Toggle chatbot visibility
+                chatbotIcon.addEventListener("click", function () {
+                    chatbotContainer.classList.remove("hidden");
+                    chatbotIcon.style.display = "none";
+                });
+    
+                closeBtn.addEventListener("click", function () {
+                    chatbotContainer.classList.add("hidden");
+                    chatbotIcon.style.display = "flex";
+                });
+    
+                sendBtn.addEventListener("click", sendMessage);
+                chatbotInput.addEventListener("keypress", function (e) {
+                    if (e.key === "Enter") {
+                        sendMessage();
+                    }
+                });
+    
+                function sendMessage() {
+                    const userMessage = chatbotInput.value.trim();
+                    if (userMessage) {
+                        appendMessage("user", userMessage);
+                        chatbotInput.value = "";
+                        getBotResponse(userMessage);
+                    }
+                }
+    
+                function appendMessage(sender, message) {
+                    const messageElement = document.createElement("div");
+                    messageElement.classList.add("message", sender);
+                    messageElement.textContent = message;
+                    chatbotMessages.appendChild(messageElement);
+                    chatbotMessages.scrollTop = chatbotMessages.scrollHeight; // Auto-scroll to the latest message
+                }
+    
+                async function getBotResponse(userMessage) {
+                    const apiUrl = "https://chatapi.akash.network/api/v1/chat/completions";
+                    const apiKey = "sk-a2ET5jDabPv6EkGZ18Skbg"; // Replace with your actual API key
+    
+                    let contextPrompt = "You are an AI assistant specialized in Electronic Health Records (EHR) and the medical field.";
+    
+                    try {
+                        const response = await fetch(apiUrl, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: Bearer ${apiKey},
+                            },
+                            body: JSON.stringify({
+                                model: "Meta-Llama-3-1-8B-Instruct-FP8",
+                                messages: [
+                                    { role: "system", content: contextPrompt },
+                                    { role: "user", content: userMessage },
+                                ],
+                            }),
+                        });
+    
+                        const data = await response.json();
+                        const botMessage = data.choices[0].message.content;
+                        appendMessage("bot", botMessage);
+                    } catch (error) {
+                        console.error("Error fetching bot response:", error);
+                        appendMessage("bot", "Sorry, something went wrong. Please try again.");
+                    }
+                }
+            });
+        </script>
+</body>
+</html>

@@ -1,0 +1,332 @@
+{% load static  %}
+<!-- From Uiverse.io by micaelgomestavares --> 
+<head>
+  <link rel="stylesheet" href="{% static "dashboard.css" %}">
+  </head
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+<div class="container-fluid p-0">
+  <div class="row g-0">
+      <!-- Sidebar -->
+      <div class="col-auto">
+          <div class="sidebar">
+              <!-- Logo -->
+              <div class="logo">
+                  <div class="logo-icon">M</div>
+                  <div class="logo-text fw-bold fs-5">MedVault</div>
+              </div>
+              
+              <!-- Navigation -->
+              <nav>
+                  <a href="#" class="nav-link active">
+                      <i class="fas fa-th-large"></i>
+                      <span>Dashboard</span>
+                  </a>
+                  <a href="#" class="nav-link">
+                      <i class="far fa-calendar-alt"></i>
+                      <span>Appointments</span>
+                  </a>
+                  </a>
+                  <a href="#" class="nav-link">
+                      <i class="fas fa-user-md"></i>
+                      <span>Doctor</span>
+                  </a>
+                  <a href="#" class="nav-link">
+                      <i class="far fa-file-alt"></i>
+                      <span>Reports</span>
+                  </a>
+                  <a href="#" class="nav-link">
+                      <i class="far fa-question-circle"></i>
+                      <span>Help</span>
+                  </a>
+              </nav>
+              
+              <!-- Admin Profile -->
+              <div class="admin-profile">
+                  <div style="display:flex;flex-direction:column;align-items:center;">
+                      <div class="logo-icon center">A</div>
+                      <div class="admin-name" id="patientName">Dr. Sadettin Kupek</div>
+                      <div class="admin-role" style="word-break: break-word;text-overflow: ellipsis;" id="patientAddress">Super Admin</div>
+                  </div>
+                  <div class="admin-actions">
+                      <button class="admin-action-btn">
+                          <i class="fas fa-cog"></i>
+                      </button>
+                      <button class="admin-action-btn">
+                          <i class="fas fa-mobile-alt"></i>
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="col">
+          <div class="main-content">
+<div class="body">
+<div class="center">
+  <h2>Treatment</h2>
+  <div class="form">
+    <div class="flex-column">
+      <label>Checkup </label></div>
+      <div class="inputForm">
+        <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg"><g id="Layer_3" data-name="Layer 3"><path d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z"></path></g></svg>
+        <input type="text" class="input" id="title" placeholder="Write what is happening to patient">
+      </div>
+    
+    <div class="flex-column">
+      <label>Treatment </label></div>
+      <div class="inputForm">
+        <svg height="20" viewBox="-64 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg"><path d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0"></path><path d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0"></path></svg>        
+        <input type="text" class="input" id="message" placeholder="Prescribe Medicine and Treatment">
+      </div>
+    </div>
+    <button style="max-width:500px;" onclick="connectWallet()" class="button-submit">
+        <img style="height:20px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/768px-MetaMask_Fox.svg.png?20220831120339"/>
+        Connect with MetaMask </button>
+
+
+      <ul id="feedbackList"></ul>
+      <ul id="AppointmentList"></ul>
+    </div>
+</div>
+<div id="overlay">
+  <div class="gif">
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+<dotlottie-player src="https://lottie.host/6a1c42ce-0554-4c1c-9ff3-3e6924560296/gg7MI4l8iA.lottie" background="transparent" speed="1" style="width: 300px; height: 300px" loop autoplay></dotlottie-player>  
+</div>
+</div>
+<style>
+    #overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+    }
+  #overlay .gif{
+    margin-top: 10%;
+  margin-left: 40%;
+  }
+    .body{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+    .form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #ffffff;
+    padding: 30px;
+    width: 450px;
+    border-radius: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    ::placeholder {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    .form button {
+    align-self: flex-end;
+    }
+
+    .flex-column > label {
+    color: #151717;
+    font-weight: 600;
+    }
+
+    .inputForm {
+    border: 1.5px solid #ecedec;
+    border-radius: 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    transition: 0.2s ease-in-out;
+    }
+
+    .input {
+    margin-left: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 85%;
+    height: 100%;
+    }
+
+    .input:focus {
+    outline: none;
+    }
+
+    .inputForm:focus-within {
+    border: 1.5px solid #2d79f3;
+    }
+
+    .flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    }
+
+    .flex-row > div > label {
+    font-size: 14px;
+    color: black;
+    font-weight: 400;
+    }
+
+    .span {
+    font-size: 14px;
+    margin-left: 5px;
+    color: #2d79f3;
+    font-weight: 500;
+    cursor: pointer;
+    }
+
+    .button-submit {
+    margin: 20px 0 10px 0;
+    background-color: #151717;
+    border: none;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 10px;
+    height: 50px;
+    width: 100%;
+    cursor: pointer;
+    }
+
+    .button-submit:hover {
+    background-color: #252727;
+    }
+
+    .p {
+    text-align: center;
+    color: black;
+    font-size: 14px;
+    margin: 5px 0;
+    }
+
+    .btn {
+    margin-top: 10px;
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    gap: 10px;
+    border: 1px solid #ededef;
+    background-color: white;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    }
+
+    .btn:hover {
+    border: 1px solid #2d79f3;
+    ;
+    }
+
+    
+</style>
+<script>
+  let provider, signer, contract;
+  const contractAddress = "0x3145A04F16fd5522C75652b7983Df91AaC4ddD21"; 
+  const abi = [{"type":"function","name":"addPatient","stateMutability":"nonpayable","inputs":[{"name":"_uid","type":"uint256","components":null,"internalType":null},{"name":"_name","type":"string","components":null,"internalType":null},{"name":"_gender","type":"string","components":null,"internalType":null},{"name":"_addr","type":"string","components":null,"internalType":null},{"name":"_dob","type":"string","components":null,"internalType":null},{"name":"_contact","type":"uint256","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"addDoctor","stateMutability":"nonpayable","inputs":[{"name":"_uid","type":"uint256","components":null,"internalType":null},{"name":"_name","type":"string","components":null,"internalType":null},{"name":"_gender","type":"string","components":null,"internalType":null},{"name":"_addr","type":"string","components":null,"internalType":null},{"name":"_dob","type":"string","components":null,"internalType":null},{"name":"_contact","type":"uint256","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"getPatient","stateMutability":"view","inputs":[{"name":"_account","type":"address","components":null,"internalType":null}],"outputs":[{"name":"","type":"tuple","components":[{"name":"account","type":"address","components":null,"internalType":null},{"name":"uid","type":"uint256","components":null,"internalType":null},{"name":"name","type":"string","components":null,"internalType":null},{"name":"gender","type":"string","components":null,"internalType":null},{"name":"addr","type":"string","components":null,"internalType":null},{"name":"dob","type":"string","components":null,"internalType":null},{"name":"exists","type":"bool","components":null,"internalType":null},{"name":"contact","type":"uint256","components":null,"internalType":null}],"internalType":null}]},{"type":"function","name":"getDoctor","stateMutability":"view","inputs":[{"name":"_account","type":"address","components":null,"internalType":null}],"outputs":[{"name":"","type":"tuple","components":[{"name":"account","type":"address","components":null,"internalType":null},{"name":"uid","type":"uint256","components":null,"internalType":null},{"name":"name","type":"string","components":null,"internalType":null},{"name":"gender","type":"string","components":null,"internalType":null},{"name":"addr","type":"string","components":null,"internalType":null},{"name":"dob","type":"string","components":null,"internalType":null},{"name":"exists","type":"bool","components":null,"internalType":null},{"name":"contact","type":"uint256","components":null,"internalType":null}],"internalType":null}]},{"type":"function","name":"setEmergencyContact","stateMutability":"nonpayable","inputs":[{"name":"_account","type":"address","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"getEmergencyContact","stateMutability":"view","inputs":[],"outputs":[{"name":"","type":"address","components":null,"internalType":null}]},{"type":"function","name":"setAppointedDoctor","stateMutability":"nonpayable","inputs":[{"name":"_account","type":"address","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"getAppointedDoctor","stateMutability":"view","inputs":[],"outputs":[{"name":"","type":"address","components":null,"internalType":null}]},{"type":"function","name":"submit_appointment","stateMutability":"nonpayable","inputs":[{"name":"_account","type":"address","components":null,"internalType":null},{"name":"_doctor","type":"address","components":null,"internalType":null},{"name":"_date","type":"string","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"treat_appointment","stateMutability":"nonpayable","inputs":[{"name":"_ailment","type":"string","components":null,"internalType":null},{"name":"_symptoms","type":"string","components":null,"internalType":null},{"name":"_prescription","type":"string","components":null,"internalType":null},{"name":"_test","type":"string","components":null,"internalType":null},{"name":"i","type":"uint256","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"get_appointment","stateMutability":"view","inputs":[{"name":"index","type":"uint256","components":null,"internalType":null}],"outputs":[{"name":"","type":"tuple","components":[{"name":"id","type":"uint256","components":null,"internalType":null},{"name":"doctor","type":"address","components":null,"internalType":null},{"name":"date","type":"string","components":null,"internalType":null},{"name":"patient","type":"address","components":null,"internalType":null},{"name":"timestamp","type":"uint256","components":null,"internalType":null},{"name":"ailment","type":"string","components":null,"internalType":null},{"name":"symptoms","type":"string","components":null,"internalType":null},{"name":"prescription","type":"string","components":null,"internalType":null},{"name":"test","type":"string","components":null,"internalType":null}],"internalType":null}]},{"type":"function","name":"appointments_count","stateMutability":"view","inputs":[],"outputs":[{"name":"","type":"uint256","components":null,"internalType":null}]}];                      
+  async function connectWallet() {
+      if (window.ethereum) {
+          provider = new ethers.BrowserProvider(window.ethereum);
+          signer = await provider.getSigner();
+          contract = new ethers.Contract(contractAddress, abi, signer);
+
+      } else {
+        alert("Please install MetaMask to interact with this DApp.");
+        return;
+      }
+      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+      const patientAddr = accounts[0]; 
+      const feedback = await contract.patientMap(patientAddr);
+      const feedbackList = document.getElementById("feedbackList");
+      feedbackList.innerHTML = "";  // Clear previous results
+
+          
+          const li = document.createElement("li");
+          li.innerHTML = `<strong>account:</strong> ${feedback[0]} <br>
+                          <strong>name:</strong> ${feedback[2]} <br>
+                          <strong>gender:</strong> ${feedback[3]} <br>
+                          <strong>addr:</strong> ${feedback[4]} <br>
+                          <strong>dob:</strong> ${feedback[5]} <br>
+                          
+                          <hr>`; 
+                          // Convert timestamp BigInt to Number before formatting
+          feedbackList.appendChild(li);
+
+          const feedbackCount = await contract.appointments_count();
+      const appointmentList = document.getElementById("AppointmentList");
+      appointmentList.innerHTML = "";  // Clear previous results
+
+      for (let i = 0; i < feedbackCount; i++) {
+        // PASS TWO PARAMETERS as per the latest contract signature
+        const appointment = await contract.get_appointment(i);
+    
+        // Make sure the current user is the patient and checkup is empty
+        if (appointment.patient.toLowerCase() === patientAddr.toLowerCase() && appointment.ailment === "") {
+            const li = document.createElement("li");
+    
+            li.innerHTML = `<hr>
+                            <strong>Patient:</strong> ${appointment.patient} <br>
+                            <strong>Date:</strong> ${appointment.date} <br>
+                            <strong>Timestamp:</strong> ${new Date(Number(appointment.timestamp) * 1000).toLocaleString()} <br>`;
+    
+            // Create button
+            const btn = document.createElement("button");
+            btn.textContent = "Checkup Now";
+            btn.classList.add("btn");
+    
+            // Add click handler
+            btn.addEventListener("click", async () => {
+                const title = document.getElementById("title").value;
+                const message = document.getElementById("message").value;
+    
+                if (!contract) return alert("Connect Wallet first!");
+    
+                try {
+                    document.getElementById("overlay").style.display = "block";
+    
+                    const tx = await contract.treat_appointment(title, message, i);
+                    await tx.wait();
+    
+                    alert("Feedback added successfully!");
+                } catch (error) {
+                    console.error("Error treating appointment:", error);
+                    alert("There was an error processing the checkup.");
+                }
+    
+                document.getElementById("overlay").style.display = "none";
+                connectWallet();
+            });
+    
+            li.appendChild(btn);
+    
+            // ✅ Ensure `appointmentList` is not null
+            const appointmentList = document.getElementById("appointmentList");
+            if (appointmentList) {
+                appointmentList.appendChild(li);
+            } else {
+                console.error("appointmentList element not found in DOM.");
+            }
+        }
+    }
+    
+  }
+  connectWallet();
+
+</script>

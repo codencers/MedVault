@@ -1,0 +1,449 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Healthcare Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static "index.css" %}"/>
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <!-- Sidebar -->
+            <div class="col-auto">
+                <div class="sidebar">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <div class="logo-icon">N</div>
+                        <div class="logo-text fw-bold fs-5">Nexus</div>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <nav>
+                        <a href="#" class="nav-link active">
+                            <i class="fas fa-th-large"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>Appointments</span>
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Analytics</span>
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-user-md"></i>
+                            <span>Doctor</span>
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="far fa-file-alt"></i>
+                            <span>Reports</span>
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="far fa-question-circle"></i>
+                            <span>Help</span>
+                        </a>
+                    </nav>
+                    
+                    <!-- Admin Profile -->
+                    <div class="admin-profile">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin" class="admin-avatar">
+                        <div class="admin-name">Dr. Sadettin Kupek</div>
+                        <div class="admin-role">Super Admin</div>
+                        <div class="admin-actions">
+                            <button class="admin-action-btn">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                            <button class="admin-action-btn">
+                                <i class="fas fa-mobile-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col">
+                <div class="main-content">
+                    <!-- Header -->
+                    <div class="header">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="search-input" placeholder="Search patients, invoice, appointments etc">
+                        </div>
+                        <div class="notification-icons">
+                            <button class="notification-btn">
+                                <i class="far fa-bell"></i>
+                            </button>
+                            <button class="notification-btn">
+                                <i class="far fa-envelope"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Dashboard Content -->
+                    <div class="dashboard-content">
+                        <div class="row">
+                            <!-- Overall Performance Card -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card performance-card">
+                                    <div class="performance-header">
+                                        <div class="performance-title">Overall Performance</div>
+                                        <div class="performance-percentage">
+                                            <i class="fas fa-arrow-up"></i>
+                                            <span>95%</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="progress-circle-container">
+                                        <div class="progress-circle"></div>
+                                        <div class="progress-content">
+                                            <div class="progress-label">Avg Health Score</div>
+                                            <div class="progress-value">468</div>
+                                            <div class="progress-badge">Perfect</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="performance-text">
+                                        Martha Smith is healthier<br>than 95% people
+                                    </div>
+                                    
+                                    <button class="check-report-btn">Check Full Report</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Analytics Card -->
+                            <div class="col-lg-5 col-md-6">
+                                <div class="card analytics-card">
+                                    <div class="analytics-header">
+                                        <div class="analytics-title">Analytics</div>
+                                        <div class="analytics-period">
+                                            <span>Weekly</span>
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="filter-buttons">
+                                        <button class="filter-btn active">Heart Rate</button>
+                                        <button class="filter-btn">Blood Pressure</button>
+                                        <button class="filter-btn">Glucose</button>
+                                        <button class="filter-btn">4+</button>
+                                    </div>
+                                    
+                                    <div class="chart-container">
+                                        <!-- Chart Grid Lines -->
+                                        <div class="chart-grid-line" style="top: 0%;">
+                                            <span class="chart-y-label">180</span>
+                                        </div>
+                                        <div class="chart-grid-line" style="top: 40%;">
+                                            <span class="chart-y-label">160</span>
+                                        </div>
+                                        <div class="chart-grid-line" style="top: 60%;">
+                                            <span class="chart-y-label">140</span>
+                                        </div>
+                                        <div class="chart-grid-line" style="top: 80%;">
+                                            <span class="chart-y-label">120</span>
+                                        </div>
+                                        <div class="chart-grid-line" style="top: 100%;">
+                                            <span class="chart-y-label">100</span>
+                                        </div>
+                                        
+                                        <!-- Chart Bars -->
+                                        <div class="chart-bars">
+                                            <div class="chart-bar-container">
+                                                <div class="chart-bar" style="height: 30%;"></div>
+                                                <div class="chart-x-label">Sat</div>
+                                            </div>
+                                            <div class="chart-bar-container">
+                                                <div class="chart-bar" style="height: 45%;"></div>
+                                                <div class="chart-x-label">Sun</div>
+                                            </div>
+                                            <div class="chart-bar-container">
+                                                <div class="chart-bar" style="height: 25%;"></div>
+                                                <div class="chart-x-label">Mon</div>
+                                            </div>
+                                            <div class="chart-bar-container">
+                                                <div class="chart-bar" style="height: 40%;"></div>
+                                                <div class="chart-x-label">Tue</div>
+                                            </div>
+                                            <div class="chart-bar-container">
+                                                <div class="chart-bar active" style="height: 70%;"></div>
+                                                <div class="chart-x-label">Wed</div>
+                                                <div class="chart-tooltip" style="bottom: 75%; left: 50%;">107 bpm</div>
+                                                <div class="chart-point" style="bottom: 70%; left: 50%;"></div>
+                                            </div>
+                                            <div class="chart-bar-container">
+                                                <div class="chart-bar" style="height: 35%;"></div>
+                                                <div class="chart-x-label">Thu</div>
+                                            </div>
+                                            <div class="chart-bar-container">
+                                                <div class="chart-bar" style="height: 20%;"></div>
+                                                <div class="chart-x-label">Fri</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Chart Y-axis label for 0 -->
+                                        <div style="position: absolute; bottom: 0; left: -1rem; font-size: 0.75rem; color: #6b7280;">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Profile Card -->
+                            <div class="col-lg-3 col-md-12">
+                                <div class="card profile-card">
+                                    <div class="profile-tabs">
+                                        <button class="profile-tab active">Profile</button>
+                                        <button class="profile-tab">History</button>
+                                        <button class="profile-tab">3+</button>
+                                    </div>
+                                    
+                                    <div class="profile-info">
+                                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Patient" class="profile-avatar">
+                                        <div>
+                                            <div class="profile-name">Martha Smith</div>
+                                            <div class="profile-details">
+                                                <span>65yrs old</span>
+                                                <span class="profile-details-separator">•</span>
+                                                <span>Male</span>
+                                            </div>
+                                        </div>
+                                        <button class="profile-clock-btn">
+                                            <i class="far fa-clock"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="profile-address">
+                                        7246, Woodland Rd, Waukesha,<br>
+                                        WI 53186
+                                    </div>
+                                    
+                                    <div class="profile-contact">
+                                        Cell: +1 310-351-7774
+                                    </div>
+                                    
+                                    <div class="profile-appointment">
+                                        Last Appointment: 24 Jan, 2024
+                                    </div>
+                                    
+                                    <div class="appointments-header">
+                                        <div class="appointments-title">Appointments</div>
+                                        <div class="appointments-nav">
+                                            <button class="appointments-nav-btn">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </button>
+                                            <button class="appointments-nav-btn">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="appointments-days">
+                                        <div class="appointment-day">
+                                            <div class="appointment-day-number">19</div>
+                                            <div class="appointment-day-name">Mon</div>
+                                            <div class="appointment-day-indicator green"></div>
+                                        </div>
+                                        <div class="appointment-day">
+                                            <div class="appointment-day-number">20</div>
+                                            <div class="appointment-day-name">Mon</div>
+                                        </div>
+                                        <div class="appointment-day active">
+                                            <div class="appointment-day-number">21</div>
+                                            <div class="appointment-day-name">Sun</div>
+                                            <div class="appointment-day-indicator purple"></div>
+                                        </div>
+                                        <div class="appointment-day">
+                                            <div class="appointment-day-number">22</div>
+                                            <div class="appointment-day-name">Mon</div>
+                                        </div>
+                                        <div class="appointment-day">
+                                            <div class="appointment-day-number">23</div>
+                                            <div class="appointment-day-name">Mon</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="appointment-list">
+                                        <div class="appointment-item">
+                                            <div class="appointment-color purple"></div>
+                                            <div>
+                                                <div class="appointment-doctor">Dr. Friedric Ziccardi</div>
+                                                <div class="appointment-specialty">Cardiologist</div>
+                                            </div>
+                                            <div class="appointment-time">17:00</div>
+                                        </div>
+                                        <div class="appointment-item">
+                                            <div class="appointment-color green"></div>
+                                            <div>
+                                                <div class="appointment-doctor">Dr. Abagael Bitsui</div>
+                                                <div class="appointment-specialty">Medicine</div>
+                                            </div>
+                                            <div class="appointment-time">20:00</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Lab Reports Section -->
+                            <div class="col-12">
+                                <div class="lab-reports-header">
+                                    <div class="lab-tabs">
+                                        <button class="lab-tab active">Lab Reports</button>
+                                        <button class="lab-tab">Prescription</button>
+                                        <button class="lab-tab">Medication</button>
+                                        <button class="lab-tab">Diagnosis</button>
+                                        <button class="lab-tab">5+</button>
+                                    </div>
+                                    <div class="lab-filter">
+                                        <span>Recent</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <table class="lab-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Test Name <i class="fas fa-chevron-down"></i></th>
+                                                <th>Referred by <i class="fas fa-chevron-down"></i></th>
+                                                <th>Date <i class="fas fa-chevron-down"></i></th>
+                                                <th>Comments</th>
+                                                <th>Result</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Electrocardiography</td>
+                                                <td>Dr. Rafiqul Islam</td>
+                                                <td>28 Jan, 2024</td>
+                                                <td>Good! Take rest</td>
+                                                <td><span class="lab-result normal">Normal</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Liver biopsy</td>
+                                                <td>Dr. Fahim Ahmed</td>
+                                                <td>12 Jan, 2024</td>
+                                                <td>Waiting for diagram</td>
+                                                <td><span class="lab-result hepatitis">Hepatitis</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Blood Test</td>
+                                                <td>Dr. Asad Khan</td>
+                                                <td>10 Jan, 2024</td>
+                                                <td>As needed</td>
+                                                <td><span class="lab-result perfect">Perfect</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Esophageal pH test</td>
+                                                <td>Dr. Shahid Ali</td>
+                                                <td>24 Dec, 2023</td>
+                                                <td>Good</td>
+                                                <td><span class="lab-result lower">Lower</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="chatbot-icon">💬</div>
+    <div id="chatbot-container" class="hidden">
+        <div id="chatbot-header">
+            <span>Chatbot</span>
+            <button id="close-btn">&times;</button>
+        </div>
+        <div id="chatbot-body">
+            <div id="chatbot-messages"></div>
+        </div>
+        <div id="chatbot-input-container">
+            <input type="text" id="chatbot-input" placeholder="Type a message..." />
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const chatbotContainer = document.getElementById("chatbot-container");
+            const closeBtn = document.getElementById("close-btn");
+            const sendBtn = document.getElementById("send-btn");
+            const chatbotInput = document.getElementById("chatbot-input");
+            const chatbotMessages = document.getElementById("chatbot-messages");
+            const chatbotIcon = document.getElementById("chatbot-icon");
+
+            // Toggle chatbot visibility
+            chatbotIcon.addEventListener("click", function () {
+                chatbotContainer.classList.remove("hidden");
+                chatbotIcon.style.display = "none";
+            });
+
+            closeBtn.addEventListener("click", function () {
+                chatbotContainer.classList.add("hidden");
+                chatbotIcon.style.display = "flex";
+            });
+
+            sendBtn.addEventListener("click", sendMessage);
+            chatbotInput.addEventListener("keypress", function (e) {
+                if (e.key === "Enter") {
+                    sendMessage();
+                }
+            });
+
+            function sendMessage() {
+                const userMessage = chatbotInput.value.trim();
+                if (userMessage) {
+                    appendMessage("user", userMessage);
+                    chatbotInput.value = "";
+                    getBotResponse(userMessage);
+                }
+            }
+
+            function appendMessage(sender, message) {
+                const messageElement = document.createElement("div");
+                messageElement.classList.add("message", sender);
+                messageElement.textContent = message;
+                chatbotMessages.appendChild(messageElement);
+            }
+
+            async function getBotResponse(userMessage) {
+                const apiKey = "your-api-key"; // Replace with your OpenAI API key
+                const apiUrl = "https://api.openai.com/v1/chat/completions";
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${apiKey}`,
+                        },
+                        body: JSON.stringify({
+                            model: "gpt-3.5-turbo",
+                            messages: [{ role: "user", content: userMessage }],
+                            max_tokens: 150,
+                        }),
+                    });
+
+                    const data = await response.json();
+                    const botMessage = data.choices[0].message.content;
+                    appendMessage("bot", botMessage);
+                } catch (error) {
+                    console.error("Error fetching bot response:", error);
+                    appendMessage("bot", "Sorry, something went wrong. Please try again.");
+                }
+            }
+        });
+    </script>
+</body>
+</html>

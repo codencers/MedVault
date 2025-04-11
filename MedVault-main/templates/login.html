@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Record System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+
+    <style>
+        /* Center the content */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-color: #ffffff;
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+            border-radius: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        ::placeholder {
+            font-family: inherit;
+        }
+
+        .form button {
+            align-self: flex-end;
+        }
+
+        .flex-column > label {
+            color: #151717;
+            font-weight: 600;
+        }
+
+        .inputForm {
+            border: 1.5px solid #ecedec;
+            border-radius: 10px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            transition: 0.2s ease-in-out;
+        }
+
+        /* Add this to your existing CSS */
+        .input {
+            margin-left: 10px;
+            border-radius: 10px;
+            border: none;
+            width: 85%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* Ensure consistent font */
+            font-size: 14px; /* Adjust font size if needed */
+        }
+
+        .input:focus {
+            outline: none;
+        }
+
+        .inputForm:focus-within {
+            border: 1.5px solid #2d79f3;
+        }
+
+        .button-submit {
+            margin: 20px 0 10px 0;
+            background-color: #151717;
+            border: none;
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 10px;
+            height: 50px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-submit:hover {
+            background-color: #252727;
+        }
+
+        .p {
+            text-align: center;
+            color: black;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .form {
+                width: 100%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form">
+        {% comment %} <h2 class="text-center">Patient Record System</h2> {% endcomment %}
+
+        {% comment %} <!-- Connect Wallet -->
+        <button class="button-submit" onclick="connectWallet()">Connect Wallet</button>
+
+        <!-- Get Patient -->
+        <h3>Get Patient</h3>
+        <button class="button-submit" onclick="getPatient()">Fetch Patient</button>
+        <pre id="output"></pre> {% endcomment %}
+
+        <!-- Add Patient -->
+        <h3>Login Page</h3>
+        <div class="inputForm">
+            <input type="text" class="input" id="uid" placeholder="UID">
+        </div>
+        <div class="inputForm">
+            <input type="text" class="input" id="name" placeholder="Name">
+        </div>
+        <div class="inputForm">
+            <input type="text" class="input" id="gender" placeholder="Gender">
+        </div>
+        <div class="inputForm">
+            <input type="text" class="input" id="addr" placeholder="Address">
+        </div>
+
+        <div class="inputForm">
+            <svg height="20" viewBox="-64 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
+                <path d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0"></path>
+                <path d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0"></path>
+            </svg>
+            <input type="datetime-local" class="input" id="dob" placeholder="Propose date and time of Appointment">
+        </div>
+        <div class="inputForm">
+            <input type="phone" class="input" id="phone" placeholder="Phone Number">
+        </div>
+        <button class="button-submit" onclick="addPatient()">Add Patient</button>
+        <p class="p">Are you a Doctor? <a href="{% url 'doclogin' %}">Login Here</a></p>
+        <p class="p" style="mouse:pointer;" onclick="connectWallet()">Connect Wallet</p>
+    </div>
+
+    <script>
+        let provider, signer, contract;
+        const contractAddress = "0x3145A04F16fd5522C75652b7983Df91AaC4ddD21"; 
+        const abi = [{"type":"function","name":"addPatient","stateMutability":"nonpayable","inputs":[{"name":"_uid","type":"uint256","components":null,"internalType":null},{"name":"_name","type":"string","components":null,"internalType":null},{"name":"_gender","type":"string","components":null,"internalType":null},{"name":"_addr","type":"string","components":null,"internalType":null},{"name":"_dob","type":"string","components":null,"internalType":null},{"name":"_contact","type":"uint256","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"addDoctor","stateMutability":"nonpayable","inputs":[{"name":"_uid","type":"uint256","components":null,"internalType":null},{"name":"_name","type":"string","components":null,"internalType":null},{"name":"_gender","type":"string","components":null,"internalType":null},{"name":"_addr","type":"string","components":null,"internalType":null},{"name":"_dob","type":"string","components":null,"internalType":null},{"name":"_contact","type":"uint256","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"getPatient","stateMutability":"view","inputs":[{"name":"_account","type":"address","components":null,"internalType":null}],"outputs":[{"name":"","type":"tuple","components":[{"name":"account","type":"address","components":null,"internalType":null},{"name":"uid","type":"uint256","components":null,"internalType":null},{"name":"name","type":"string","components":null,"internalType":null},{"name":"gender","type":"string","components":null,"internalType":null},{"name":"addr","type":"string","components":null,"internalType":null},{"name":"dob","type":"string","components":null,"internalType":null},{"name":"exists","type":"bool","components":null,"internalType":null},{"name":"contact","type":"uint256","components":null,"internalType":null}],"internalType":null}]},{"type":"function","name":"getDoctor","stateMutability":"view","inputs":[{"name":"_account","type":"address","components":null,"internalType":null}],"outputs":[{"name":"","type":"tuple","components":[{"name":"account","type":"address","components":null,"internalType":null},{"name":"uid","type":"uint256","components":null,"internalType":null},{"name":"name","type":"string","components":null,"internalType":null},{"name":"gender","type":"string","components":null,"internalType":null},{"name":"addr","type":"string","components":null,"internalType":null},{"name":"dob","type":"string","components":null,"internalType":null},{"name":"exists","type":"bool","components":null,"internalType":null},{"name":"contact","type":"uint256","components":null,"internalType":null}],"internalType":null}]},{"type":"function","name":"setEmergencyContact","stateMutability":"nonpayable","inputs":[{"name":"_account","type":"address","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"getEmergencyContact","stateMutability":"view","inputs":[],"outputs":[{"name":"","type":"address","components":null,"internalType":null}]},{"type":"function","name":"setAppointedDoctor","stateMutability":"nonpayable","inputs":[{"name":"_account","type":"address","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"getAppointedDoctor","stateMutability":"view","inputs":[],"outputs":[{"name":"","type":"address","components":null,"internalType":null}]},{"type":"function","name":"submit_appointment","stateMutability":"nonpayable","inputs":[{"name":"_account","type":"address","components":null,"internalType":null},{"name":"_doctor","type":"address","components":null,"internalType":null},{"name":"_date","type":"string","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"treat_appointment","stateMutability":"nonpayable","inputs":[{"name":"_ailment","type":"string","components":null,"internalType":null},{"name":"_symptoms","type":"string","components":null,"internalType":null},{"name":"_prescription","type":"string","components":null,"internalType":null},{"name":"_test","type":"string","components":null,"internalType":null},{"name":"i","type":"uint256","components":null,"internalType":null}],"outputs":[]},{"type":"function","name":"get_appointment","stateMutability":"view","inputs":[{"name":"index","type":"uint256","components":null,"internalType":null}],"outputs":[{"name":"","type":"tuple","components":[{"name":"id","type":"uint256","components":null,"internalType":null},{"name":"doctor","type":"address","components":null,"internalType":null},{"name":"date","type":"string","components":null,"internalType":null},{"name":"patient","type":"address","components":null,"internalType":null},{"name":"timestamp","type":"uint256","components":null,"internalType":null},{"name":"ailment","type":"string","components":null,"internalType":null},{"name":"symptoms","type":"string","components":null,"internalType":null},{"name":"prescription","type":"string","components":null,"internalType":null},{"name":"test","type":"string","components":null,"internalType":null}],"internalType":null}]},{"type":"function","name":"appointments_count","stateMutability":"view","inputs":[],"outputs":[{"name":"","type":"uint256","components":null,"internalType":null}]}];                      
+        async function connectWallet() {
+            if (window.ethereum) {
+                provider = new ethers.BrowserProvider(window.ethereum);
+                signer = await provider.getSigner();
+                contract = new ethers.Contract(contractAddress, abi, signer);
+            } else {
+                alert("Please install MetaMask!");
+            }
+        }
+        connectWallet();
+
+        async function addPatient() {
+            if (!contract) return alert("Connect Wallet first!");
+
+            const uid = document.getElementById("uid").value;
+            const name = document.getElementById("name").value;
+            const gender = document.getElementById("gender").value;
+            const addr = document.getElementById("addr").value;
+            const dob = document.getElementById("dob").value;
+            const contact = document.getElementById("phone").value;
+
+            try {
+                const tx = await contract.addPatient( uid, name, gender, addr, dob, contact);
+                await tx.wait(); 
+                window.location.replace("{% url "dashboard" %}");
+            } catch (error) {
+                console.error("Error adding patient:", error);
+                alert("Error adding patient");
+            }
+        }
+    </script>
+</body>
+</html>

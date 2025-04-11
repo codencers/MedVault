@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User History - Nexus Healthcare</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #f3f4f6;
+            --dark-color: #111827;
+            --light-color: #ffffff;
+            --success-color: #22c55e;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #3b82f6;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f9fafb;
+            color: var(--dark-color);
+        }
+        
+    .doctor-profile-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--border-color);
+    }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background-color: var(--light-color);
+            height: 100vh;
+            position: fixed;
+            width: 220px;
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--dark-color);
+            border-radius: 0.5rem;
+            margin-bottom: 0.25rem;
+            text-decoration: none;
+        }
+
+        .nav-link i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nav-link.active {
+            background-color: #f3f4f6;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background-color: #f3f4f6;
+        }
+
+        .admin-profile {
+            margin-top: auto;
+            text-align: center;
+            padding-top: 1.5rem;
+        }
+
+        .admin-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 0.75rem;
+            border: 2px solid var(--border-color);
+        }
+
+        .admin-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .admin-role {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .admin-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            gap: 1rem;
+        }
+
+        .admin-action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #f3f4f6;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 220px;
+            padding: 1.5rem;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: var(--light-color);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border-radius: 9999px;
+            border: none;
+            background-color: #f3f4f6;
+            font-size: 0.875rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .notification-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .notification-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: transparent;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+        }
+
+        /* Table Styles */
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background-color: var(--light-color);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .history-table th, .history-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .history-table th {
+            background-color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .history-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .action-btn.view {
+            background-color: var(--info-color);
+            color: white;
+        }
+
+        .action-btn.edit {
+            background-color: var(--warning-color);
+            color: white;
+        }
+
+        .action-btn.download {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                width: 70px;
+                padding: 1rem 0.5rem;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+
+            .logo-text, .nav-link span, .admin-name, .admin-role {
+                display: none;
+            }
+
+            .logo {
+                justify-content: center;
+            }
+
+            .nav-link {
+                justify-content: center;
+                padding: 0.75rem;
+            }
+
+            .nav-link i {
+                margin-right: 0;
+            }
+
+            .admin-profile {
+                padding-top: 1rem;
+            }
+
+            .admin-avatar {
+                width: 40px;
+                height: 40px;
+            }
+
+            .admin-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .search-container {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .search-container {
+                width: 150px;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .search-container {
+                width: 100%;
+            }
+
+            .notification-icons {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <!-- Sidebar -->
+            <div class="col-auto">
+                <div class="sidebar">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <div class="logo-icon">N</div>
+                        <div class="logo-text fw-bold fs-5">Nexus</div>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <nav>
+                        <a href="#" class="nav-link active">
+                            <i class="fas fa-th-large"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>Appointments</span>
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Analytics</span>
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-user-md"></i>
+                            <span>Doctor</span>
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="far fa-file-alt"></i>
+                            <span>Reports</span>
+                        </a>
+                        <a href="#" class="nav-link">
+                            <i class="far fa-question-circle"></i>
+                            <span>Help</span>
+                        </a>
+                    </nav>
+                    
+                    <!-- Admin Profile -->
+                    <div class="admin-profile">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin" class="admin-avatar">
+                        <div class="admin-name">Dr. Sadettin Kupek</div>
+                        <div class="admin-role">Super Admin</div>
+                        <div class="admin-actions">
+                            <button class="admin-action-btn">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                            <button class="admin-action-btn">
+                                <i class="fas fa-mobile-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col">
+                <div class="main-content">
+                    <!-- Header -->
+                    <div class="header">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="search-input" placeholder="Search patients, invoice, appointments etc">
+                        </div>
+                        <div class="notification-icons">
+                            <button class="notification-btn">
+                                <i class="far fa-bell"></i>
+                            </button>
+                            <button class="notification-btn">
+                                <i class="far fa-envelope"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- User History Table -->
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Doctor</th>
+                                <th>Profile</th>
+                                <th>Diagnosis</th>
+                                <th>Prescription</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2025-03-30</td>
+                                <td>Dr. John Doe</td>
+                                <td>
+                                    <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Dr. John Doe" class="doctor-profile-img">
+                                </td>
+                                <td>Flu</td>
+                                <td>Paracetamol</td>
+                                <td>
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn edit">Edit</button>
+                                    <button class="action-btn download">Download</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2025-03-28</td>
+                                <td>Dr. Jane Smith</td>
+                                <td>
+                                    <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Dr. Jane Smith" class="doctor-profile-img">
+                                </td>
+                                <td>Diabetes</td>
+                                <td>Insulin</td>
+                                <td>
+                                    <button class="action-btn view">View</button>
+                                    <button class="action-btn edit">Edit</button>
+                                    <button class="action-btn download">Download</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                           
+               
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

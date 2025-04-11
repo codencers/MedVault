@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Nexus Healthcare</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #f3f4f6;
+            --dark-color: #111827;
+            --light-color: #ffffff;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f9fafb;
+            color: var(--dark-color);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background-color: var(--light-color);
+            height: 100vh;
+            position: fixed;
+            width: 220px;
+            border-right: 1px solid var(--border-color);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--dark-color);
+            border-radius: 0.5rem;
+            margin-bottom: 0.25rem;
+            text-decoration: none;
+        }
+
+        .nav-link i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nav-link.active {
+            background-color: #f3f4f6;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background-color: #f3f4f6;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 220px;
+            padding: 1.5rem;
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-radius: 0.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+        }
+
+        .content-section {
+            background-color: var(--light-color);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .content-section p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .content-section ul {
+            padding-left: 1.5rem;
+        }
+
+        .content-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                width: 70px;
+                padding: 1rem 0.5rem;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+
+            .logo-text, .nav-link span {
+                display: none;
+            }
+
+            .logo {
+                justify-content: center;
+            }
+
+            .nav-link {
+                justify-content: center;
+                padding: 0.75rem;
+            }
+
+            .nav-link i {
+                margin-right: 0;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">N</div>
+            <div class="logo-text fw-bold fs-5">Nexus</div>
+        </div>
+        <nav>
+            <a href="dashboard.html" class="nav-link">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="userhistory.html" class="nav-link">
+                <i class="fas fa-history"></i>
+                <span>User History</span>
+            </a>
+            <a href="support.html" class="nav-link">
+                <i class="fas fa-question-circle"></i>
+                <span>Support</span>
+            </a>
+            <a href="privacy.html" class="nav-link active">
+                <i class="fas fa-user-shield"></i>
+                <span>Privacy Policy</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Privacy Policy</h1>
+            <p>Your privacy is important to us. Learn how we handle your data.</p>
+        </div>
+
+        <!-- Content Section -->
+        <div class="content-section">
+            <h2>Introduction</h2>
+            <p>Welcome to Nexus Healthcare. This Privacy Policy explains how we collect, use, and protect your personal information when you use our services.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Data Collection</h2>
+            <p>We collect the following types of data:</p>
+            <ul>
+                <li>Personal information (e.g., name, email, phone number)</li>
+                <li>Medical records and health information</li>
+                <li>Usage data (e.g., IP address, browser type, and activity logs)</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>Data Usage</h2>
+            <p>We use your data to:</p>
+            <ul>
+                <li>Provide and improve our services</li>
+                <li>Communicate with you about your account or appointments</li>
+                <li>Ensure compliance with legal and regulatory requirements</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>Data Protection</h2>
+            <p>We implement industry-standard security measures to protect your data from unauthorized access, disclosure, or misuse.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Your Rights</h2>
+            <p>You have the right to:</p>
+            <ul>
+                <li>Access your personal data</li>
+                <li>Request corrections to your data</li>
+                <li>Request deletion of your data</li>
+                <li>Withdraw consent for data processing</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>Contact Us</h2>
+            <p>If you have any questions about this Privacy Policy, please contact us:</p>
+            <p><i class="fas fa-envelope"></i> privacy@nexushealthcare.com</p>
+            <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
